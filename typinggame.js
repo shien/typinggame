@@ -23,12 +23,18 @@ var numberOfQuestions = 10;
 var missCount = 0;
 var count = 0;
 
+// game mode list
 var FINISH = 0
 var GAMENOW = 1
 
+// initiarize mode
 var mode = GAMENOW;
+
+// initiarize time limit
 var limit = 100;
 var score = 0;
+
+var backGroundColor = '#00aaee';
 
 function init() {
     canvas = document.getElementById('typinggame');
@@ -93,14 +99,22 @@ function startGame() {
     var sentenceX = typedTextX;
     var sentenceY = 150;
 
-    context.fillStyle = '#00aaee';
+    context.fillStyle = backGroundColor;
     context.fillRect(0, 0, canvasWidth, canvasHeight);
 
     context.fillStyle='white';
     context.fillRect(displayMargin, typedTextY - 20, canvasWidth - (displayMargin * 2), 30);
 
-    count = 0;
+    // initialize timer
+    context.fillStyle = 'yellow';
+    context.fillRect(390, 380, 100, 30);
+
+    // initialize combo 
     comboCount = 0;
+    context.fillStyle = 'yellow';
+    context.fillRect(280, 380, 100, 30);
+
+    count = 0;
     context.fillStyle = 'black';
     context.font = '30px _sans';
     context.fillText(questions[0][1], sentenceX, sentenceY);
@@ -113,14 +127,18 @@ function startGame() {
  */
 function finish() {
 
-    var finishX = 300;
-    var finishY = 100;
-    var finish  = "FINISH!!"
+    var finishX = (canvasWidth - 250) / 2;
+    var finishY = (canvasHeight - 200) / 2;
 
-    context.fillStyle = '#44aa22';
+    context.fillStyle = backGroundColor;
     context.fillRect(0, 0, canvasWidth, canvasHeight);
-    context.fillStyle = 'yellow';
-    context.font = '20px _sans';
+
+    context.fillStyle = '#f0f8ff';
+    context.fillRect(displayMargin, finishY + 30, canvasWidth - (displayMargin * 2) + 10, -90);
+
+    var finish  = "FINISH!!"
+    context.fillStyle = '#3300ee';
+    context.font = '50px _sans';
     context.fillText(finish, finishX, finishY);
 
     mode = FINISH;
