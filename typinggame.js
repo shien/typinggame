@@ -13,15 +13,17 @@ var alphabets = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P'
 
 var questions = [
                     [['S','A','M','P','L','E'], "sample"],
-                    [['S', 'A', 'M', 'P', 'L', 'E', '2'], "sample2"]
+                    [['S', 'A', 'M', 'P', 'L', 'E', 'S'], "samples"],
+                    [['T', 'A', 'N', 'O', 'S', 'H', 'I', 'I'], "TANOSHII"]
                 ];
 
 var displayMargin = 50;
 
 var numberOfQuestions = 10;
 
-var missCount = 0;
-var count = 0;
+var countCombo = 0;
+var countLength = 0;
+var countSentence = 0;
 
 // game mode list
 var FINISH = 0
@@ -51,14 +53,14 @@ function init() {
 
 function onKeyDown(e) {
 
-    context.fillStyle='black';
-
     var code   = e.keyCode;
     var answer = "";
 
     if (mode == FINISH) {
         return;
     }
+
+    context.fillStyle='black';
 
     if ((code >= 65 && code <= 90) || (code >= 97 && code <= 122)) {
         if (code < 97) {   
@@ -67,14 +69,14 @@ function onKeyDown(e) {
             answer = alphabets[code - 97];
         }
         
-        if (answer != questions[0][0][count]) {
-            comboCount = 0; 
+        if (answer != questions[countSentence][0][countLength]) {
+            countCombo = 0; 
             return;
         }
 
-        comboCount += 1; 
+        countCombo += 1; 
 
-        var combo = "COMBO: " + comboCount
+        var combo = "COMBO: " + countCombo;
 
         context.fillStyle = 'yellow';
         context.fillRect(280, 380, 100, 30);
@@ -86,12 +88,27 @@ function onKeyDown(e) {
         context.font = '15px _sans';
         context.fillText(answer, typedTextX, typedTextY);
         typedTextX += 15;
-        count += 1; 
-    }
+        countLength += 1; 
 
-    if (count >= questions[0][0].length) {
-        finish();
+        console.log("countSentence: " + countSentence);
+        console.log("questions[countSentence]: " + questions[countSentence][0]);
+        console.log("countLength: " + countLength);
+
+        if (countLength >= questions[countSentence][0].length) {
+            if (countSentence < questions.length - 1) {
+                nextSentence();
+            } else {
+                finish();
+            }
+        }
+
     }
+}
+
+function nextSentence() {
+    countSentence++;
+    typedTextX = 100;
+    startGame();
 }
 
 function startGame() {
@@ -110,14 +127,13 @@ function startGame() {
     context.fillRect(390, 380, 100, 30);
 
     // initialize combo 
-    comboCount = 0;
     context.fillStyle = 'yellow';
     context.fillRect(280, 380, 100, 30);
 
-    count = 0;
+    countLength = 0;
     context.fillStyle = 'black';
     context.font = '30px _sans';
-    context.fillText(questions[0][1], sentenceX, sentenceY);
+    context.fillText(questions[countSentence][1], sentenceX, sentenceY);
 }
 
 /*
