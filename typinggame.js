@@ -14,7 +14,7 @@ var alphabets = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P'
 var questions = [
                     [['S','A','M','P','L','E'], "sample"],
                     [['S', 'A', 'M', 'P', 'L', 'E', 'S'], "samples"],
-                    [['T', 'A', 'N', 'O', 'S', 'H', 'I', 'I'], "TANOSHII"]
+                    [['T', 'A', 'N', 'O', 'S', 'H', 'I', 'I'], "楽しい"]
                 ];
 
 var displayMargin = 50;

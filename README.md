@@ -8,3 +8,10 @@ Open index.html using web browser.
 # Compatible browser
 
 * Google Chrome
+
+# Feture
+
+* calculte score
+* show result 
+* ranking server
+* make sentence to read from sentence file
