@@ -9,7 +9,7 @@ Open index.html using web browser.
 
 * Google Chrome
 
-# Feture
+# Feature
 
 * calculte score
 * show result 

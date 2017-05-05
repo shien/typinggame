@@ -33,7 +33,7 @@ var GAMENOW = 1
 var mode = GAMENOW;
 
 // initiarize time limit
-var limit = 100;
+var LIMIT = 100;
 var score = 0;
 
 var backGroundColor = '#00aaee';
@@ -62,6 +62,7 @@ function onKeyDown(e) {
     var answer = "";
 
     if (mode == FINISH) {
+        initGame();
         return;
     }
 
@@ -107,8 +108,14 @@ function nextSentence() {
 }
 
 function initGame() {
+
     countSentence = 0;
+    countLength = 0;
+    countCombo = 0;
     typedTextX = 100;
+    mode = GAMENOW;
+    time = LIMIT;    
+
     startGame();
 }
 
@@ -124,7 +131,7 @@ function writeCombo() {
 function startGame() {
 
     var sentenceX = typedTextX;
-    var sentenceY = 150;
+    var sentenceY = 170;
 
     context.fillStyle = backGroundColor;
     context.fillRect(0, 0, canvasWidth, canvasHeight);
@@ -137,6 +144,9 @@ function startGame() {
     context.fillRect(390, 380, 100, 30);
 
     writeCombo();
+
+    context.fillStyle='white';
+    context.fillRect(displayMargin, sentenceY - 50, canvasWidth - (displayMargin * 2), 100);
 
     countLength = 0;
     context.fillStyle = 'black';
@@ -174,7 +184,7 @@ function finish() {
  *
  */
 
-var time = limit;
+var time = LIMIT;
 
 function timer() {
     if (mode == GAMENOW) {
