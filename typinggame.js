@@ -47,9 +47,14 @@ function init() {
         canvasWidth = canvas.width;
         canvasHeight = canvas.height;
         window.addEventListener('keydown', onKeyDown, false);
-        startGame();
+        initGame();
     }
 }
+
+/*
+ * any alphabet key down event.
+ *
+ */
 
 function onKeyDown(e) {
 
@@ -76,23 +81,13 @@ function onKeyDown(e) {
 
         countCombo += 1; 
 
-        var combo = "COMBO: " + countCombo;
-
-        context.fillStyle = 'yellow';
-        context.fillRect(280, 380, 100, 30);
-        context.fillStyle = 'green';
-        context.font = '15px _sans';
-        context.fillText(combo, 290, 400);
+        writeCombo();
 
         context.fillStyle = 'black';
         context.font = '15px _sans';
         context.fillText(answer, typedTextX, typedTextY);
         typedTextX += 15;
         countLength += 1; 
-
-        console.log("countSentence: " + countSentence);
-        console.log("questions[countSentence]: " + questions[countSentence][0]);
-        console.log("countLength: " + countLength);
 
         if (countLength >= questions[countSentence][0].length) {
             if (countSentence < questions.length - 1) {
@@ -111,6 +106,21 @@ function nextSentence() {
     startGame();
 }
 
+function initGame() {
+    countSentence = 0;
+    typedTextX = 100;
+    startGame();
+}
+
+function writeCombo() {
+    var combo = "COMBO: " + countCombo;
+    context.fillStyle = 'yellow';
+    context.fillRect(280, 380, 100, 30);
+    context.fillStyle = 'green';
+    context.font = '15px _sans';
+    context.fillText(combo, 290, 400);
+}
+
 function startGame() {
 
     var sentenceX = typedTextX;
@@ -126,9 +136,7 @@ function startGame() {
     context.fillStyle = 'yellow';
     context.fillRect(390, 380, 100, 30);
 
-    // initialize combo 
-    context.fillStyle = 'yellow';
-    context.fillRect(280, 380, 100, 30);
+    writeCombo();
 
     countLength = 0;
     context.fillStyle = 'black';
