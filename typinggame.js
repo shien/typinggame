@@ -56,6 +56,8 @@ function init() {
  *
  */
 
+var maxCombo = 0;
+
 function onKeyDown(e) {
 
     var code   = e.keyCode;
@@ -80,8 +82,11 @@ function onKeyDown(e) {
             return;
         }
 
-        countCombo += 1; 
 
+        countCombo += 1; 
+        if (countCombo > maxCombo) {
+            maxCombo = countCombo;
+        }
         writeCombo();
 
         context.fillStyle = 'black';
@@ -154,6 +159,20 @@ function startGame() {
     context.fillText(questions[countSentence][1], sentenceX, sentenceY);
 }
 
+function writeMaxCombo() {
+
+    var maxComboX = displayMargin;
+    var maxComboY = canvasHeight / 2;
+    var combo  = "MAX COMBO: " + maxCombo
+
+    context.fillStyle = '#f0f8ff';
+    context.fillRect(displayMargin, maxComboY + 30, canvasWidth - (displayMargin * 2) + 10, -90);
+
+    context.fillStyle = '#3300ee';
+    context.font = '15px _sans';
+    context.fillText(combo, maxComboX, maxComboY);
+}
+
 /*
  * game over.
  * change mode to finished.
@@ -174,9 +193,10 @@ function finish() {
     context.fillStyle = '#3300ee';
     context.font = '50px _sans';
     context.fillText(finish, finishX, finishY);
+    
+    writeMaxCombo();
 
     mode = FINISH;
-
 }
 
 /*
