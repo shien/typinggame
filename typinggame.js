@@ -33,7 +33,7 @@ var GAMENOW = 1
 var mode = GAMENOW;
 
 // initiarize time limit
-var LIMIT = 100;
+var LIMIT = 10;
 var score = 0;
 
 var backGroundColor = '#00aaee';
@@ -127,10 +127,10 @@ function initGame() {
 function writeCombo() {
     var combo = "COMBO: " + countCombo;
     context.fillStyle = 'yellow';
-    context.fillRect(280, 380, 100, 30);
+    context.fillRect(canvasWidth - (displayMargin * 3) - 170, canvasHeight * 0.7 + 10, 120, -30);
     context.fillStyle = 'green';
     context.font = '15px _sans';
-    context.fillText(combo, 290, 400);
+    context.fillText(combo, canvasWidth - (displayMargin * 3) - 150, canvasHeight * 0.7);
 }
 
 function startGame() {
@@ -145,8 +145,7 @@ function startGame() {
     context.fillRect(displayMargin, typedTextY - 20, canvasWidth - (displayMargin * 2), 30);
 
     // initialize timer
-    context.fillStyle = 'yellow';
-    context.fillRect(390, 380, 100, 30);
+    writeTimeBox();
 
     writeCombo();
 
@@ -161,15 +160,18 @@ function startGame() {
 
 function writeMaxCombo() {
 
-    var maxComboX = displayMargin;
-    var maxComboY = canvasHeight / 2;
-    var combo  = "MAX COMBO: " + maxCombo
+    var maxComboBoxX = displayMargin;
+    var maxComboBoxY = canvasHeight / 2;
+    var combo  = "MAX COMBO: " + maxCombo;
 
     context.fillStyle = '#f0f8ff';
-    context.fillRect(displayMargin, maxComboY + 30, canvasWidth - (displayMargin * 2) + 10, -90);
+    context.fillRect(maxComboBoxX, maxComboBoxY + 30, canvasWidth - (displayMargin * 2) + 10, -70);
+
+    var maxComboX = canvasWidth / 2 - 120;
+    var maxComboY = canvasHeight / 2;
 
     context.fillStyle = '#3300ee';
-    context.font = '15px _sans';
+    context.font = '20px _sans';
     context.fillText(combo, maxComboX, maxComboY);
 }
 
@@ -204,17 +206,30 @@ function finish() {
  *
  */
 
+function writeTimeBox() {
+        context.fillStyle = 'yellow';
+        context.fillRect(canvasWidth - (displayMargin * 3) - 20, canvasHeight * 0.7 + 10, 100, -30);
+}
+
+function writeTime(time) {
+        context.fillStyle = 'green';
+        context.font = '15px _sans';
+        context.fillText("limit: " + time, canvasWidth - (displayMargin * 3), canvasHeight * 0.7);
+}
+
 var time = LIMIT;
 
 function timer() {
-    if (mode == GAMENOW) {
+    if (mode == GAMENOW && time > 0) {
+        console.log(mode);
         time--;
-        context.fillStyle = 'yellow';
-        context.fillRect(390, 380, 100, 30);
-        context.fillStyle = 'green';
-        context.font = '15px _sans';
-        context.fillText("limit: " + time, 400, 400);
+        writeTimeBox();
+        writeTime(time);
+    } else {
+        mode = FINISH;
+        finish();
     }
 }
+
 
 setInterval("timer()", 1000);
