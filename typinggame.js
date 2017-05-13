@@ -9,12 +9,27 @@ window.onload = init;
 var typedTextX = 100 
 var typedTextY = 100
 
+// 65 - 90 and 97 - 124
 var alphabets = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
+
+// 48 - 57
+var numbers  = ['0','1','2','3','4','5','6','7','8','9']
+
+// 33 - 47
+var symbols1  = ['!','\"','#','%','&','\'','\(','\)','*','+',',','-','.','/']
+// 58 - 64
+var symbols2  = [':',';','<','=','>','?','@']
+// 91 - 96
+var symbols3  = ['\[', '\\','\]','^','_','`']
+// 123 - 126
+var symbols4  = ['\{', '|','\}','~']
+
 
 var questions = [
                     [['S','A','M','P','L','E'], "sample"],
-                    [['S', 'A', 'M', 'P', 'L', 'E', 'S'], "samples"],
-                    [['T', 'A', 'N', 'O', 'S', 'H', 'I', 'I'], "楽しい"]
+                    [['S', '1', 'M', 'P', 'L', 'E', '2'], "s1mple2"],
+                    [['T', 'A', 'N', 'O', 'S', 'H', 'I', 'I'], "楽しい"],
+                    [['S', 'U', 'G', 'O', '-', 'I'], "すごーい"]
                 ];
 
 var displayMargin = 50;
@@ -58,6 +73,16 @@ function init() {
 
 var maxCombo = 0;
 
+function addCombo() {
+        countCombo += 1; 
+
+        if (countCombo > maxCombo) {
+            maxCombo = countCombo;
+        }
+
+        writeCombo();
+}
+
 function onKeyDown(e) {
 
     var code   = e.keyCode;
@@ -70,24 +95,25 @@ function onKeyDown(e) {
 
     context.fillStyle='black';
 
-    if ((code >= 65 && code <= 90) || (code >= 97 && code <= 122)) {
-        if (code < 97) {   
+    if (code >= 33 && code <= 189) {
+        if (code >= 65 && code <= 90) {   
             answer = alphabets[code - 65];
-        } else {
+        } else if (code >= 97 && code <= 124) {
             answer = alphabets[code - 97];
+        } else if (code >= 48 && code <= 57) {
+            answer = numbers[code - 48];
+        } else if (code === 189) { // for '-'
+            answer = symbols1[11];
         }
-        
+
         if (answer != questions[countSentence][0][countLength]) {
             countCombo = 0; 
             return;
         }
 
+        console.log(answer);
 
-        countCombo += 1; 
-        if (countCombo > maxCombo) {
-            maxCombo = countCombo;
-        }
-        writeCombo();
+        addCombo();
 
         context.fillStyle = 'black';
         context.font = '15px _sans';
